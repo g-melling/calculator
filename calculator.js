@@ -18,7 +18,7 @@ function handleButtonClick(event) {
         updateDisplay(currentInput);
     }
 
-    else if (['+', '-', '/', 'X', '%'].includes(buttonText)) {
+    else if (['+', '-', '/', 'X'].includes(buttonText)) {
         if (operator && currentInput) {
             calculate();
         }
@@ -39,22 +39,53 @@ function handleButtonClick(event) {
         }
     }
 
-// handle +- function
+    else if (buttonText === '%') {
+        if (currentInput) {
+            let percent = (parseFloat(currentInput) / 100).toString();
+            updateDisplay(currentInput);
+        }
+    }
 
-// handle percent function
+    else if (buttonText === 'A/C') {
+        currentInput = '';
+        previousInput = '';
+        operator = '';
+        updateDisplay();
+    }
 
-// handle AC
-
-// handle clear
+    else if (buttonText === 'C'); {
+        currentInput = currentInput.slice(0, -1);
+    }
 }
 
+function calculate() {
+    if (currentInput !== '' && previousInput !== '') {
+        let prev = parseFloat(previousInput);
+        let current = parseFloat(currentInput);
 
+        switch(operator) {
+            case "+":
+                result = prev + current;
+                break;
+            case "-":
+                result = prev - current;
+                break;
+            case "/":
+                result = prev / current;
+                break;
+            case "X":
+                result = prev * current;
+                break;
+            default:
+                return;
+        }
 
-
-
-
-
-// calculate function (check if current and previous input have values)
+        updateDisplay(result.toString);
+        previousInput = '';
+        currentInput = '';
+        operator = '';
+    }
+}
 
 function updateDisplay(value) {
     display.innerText = value || "0";
