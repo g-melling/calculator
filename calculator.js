@@ -1,5 +1,5 @@
 const display = document.getElementById('display');
-const buttons = document.getElementById('.button');
+const buttons = document.querySelectorAll('.button');
 
 let currentInput = '';
 let previousInput = '';
@@ -12,8 +12,10 @@ buttons.forEach(button => {
 function handleButtonClick(event) {
     const buttonText = event.target.innerText;
 
-    if (buttonText >= 0 && buttonText <= 0 || buttonText === ".") {
-        // update display
+    if (buttonText >= 0 && buttonText <= 9 || buttonText === ".") {
+        if (buttonText === '.' && currentInput.includes('.')) {
+            return;
+        }
         currentInput += buttonText;
         updateDisplay(currentInput);
     }
@@ -28,20 +30,21 @@ function handleButtonClick(event) {
     }
 
     else if (buttonText === '=') {
-        if currentInput !== '' {
+        if (currentInput !== '' && previousInput !== '') {
             calculate();
         }
     }
 
     else if (buttonText === '+/-') {
         if (currentInput) {
-            currentInput = `${-}currentInput`;
+            currentInput = parseFloat(currentInput * -1).toString();
+            updateDisplay(currentInput);
         }
     }
 
     else if (buttonText === '%') {
         if (currentInput) {
-            let percent = (parseFloat(currentInput) / 100).toString();
+            currentInput = (parseFloat(currentInput) / 100).toString();
             updateDisplay(currentInput);
         }
     }
@@ -50,11 +53,12 @@ function handleButtonClick(event) {
         currentInput = '';
         previousInput = '';
         operator = '';
-        updateDisplay();
+        updateDisplay('0');
     }
 
-    else if (buttonText === 'C'); {
+    else if (buttonText === 'C') {
         currentInput = currentInput.slice(0, -1);
+        updateDisplay(currentInput || '0');
     }
 }
 
@@ -62,6 +66,7 @@ function calculate() {
     if (currentInput !== '' && previousInput !== '') {
         let prev = parseFloat(previousInput);
         let current = parseFloat(currentInput);
+        let result;
 
         switch(operator) {
             case "+":
@@ -71,6 +76,13 @@ function calculate() {
                 result = prev - current;
                 break;
             case "/":
+                if (current === 0) {
+                    updateDisplay("Error");
+                    currentInput = '';
+                    previousInput = '';
+                    operator = '';
+                    return;
+                }
                 result = prev / current;
                 break;
             case "X":
@@ -80,9 +92,9 @@ function calculate() {
                 return;
         }
 
-        updateDisplay(result.toString);
+        updateDisplay(result.toString());
+        currentInput = result.toString();
         previousInput = '';
-        currentInput = '';
         operator = '';
     }
 }

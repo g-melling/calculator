@@ -10,14 +10,25 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #3cbf9a;
+    background-color: #f8f4ec;
     margin: 0;
+}
+
+#header-container {
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    text-align: center;
+    color: #e83c91;
+    font-size: 36px;
 }
 
 #calculator-container {
     border: 5px solid black;
     border-radius: 25px;
-    background-color: blueviolet;
+    background-color: #2b1c33;
     width: 400px;
     display: flex;
     flex-direction: column;
@@ -25,9 +36,9 @@ body {
   }
 
 #display {
-    border: 5px solid black;
+    border: 5px outset black;
     border-radius: 10px;
-    background-color: grey;
+    background-color: #f8f4ec;
     padding: 15px;
     margin-bottom: 15px;
     margin-top: 15px;
@@ -43,7 +54,7 @@ body {
 }
 
 .button {
-    border: 3px solid black;
+    border: 3px outset rgb(60, 60, 60);
     border-radius: 10px;
     padding: 15px;
     flex: 1;
@@ -53,15 +64,15 @@ body {
 }
 
 .operator {
-    background-color: green;
+    background-color: #ff8fb7;
 }
 
 .number {
-    background-color: blue;
+    background-color: #e83c91;
 }
 
 #equals {
-    background-color: yellow;
+    background-color: rgb(185, 185, 20);
     justify-content: center;
     align-items: center;
 }
